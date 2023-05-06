@@ -1,0 +1,65 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h3>ADMINISTRACION DE CLIENTES</h3>
+            <div class="card-body">
+
+                <!--LLamada del componente agregar cliente-->
+                <!--activacion del decorador--><!--cliente pasa al hijo como clienteseleccionado-->
+                <app-agregar-clientes [refrescarTablaClientes]=" datosCliente"
+                    [clienteSeleccionado]="clienteSeleccionado" *ngIf="activo"></app-agregar-clientes>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h3 style="text-align: center;">TABLA CLIENTES</h3>
+        </div>
+        <div class="card-header">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                (click)="agregarCliente()">Agregar usuario</button>
+        </div>
+        <!--FILTRO TABLA-->
+        <div class="card-body">
+            <div class="container text-center mt-4">
+                <input class="form-control mt-2 mb-2" type="text" [(ngModel)]="serchValue" #ctrl="ngModel"
+                    (input)="filtro()" placeholder="Search by name" />
+                <!--TABLA-->
+                <table class="table table-bordered border-purple" *ngIf="hayClientes(); else sinClientes">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NOMBRE</th>
+                            <th>APELLIDO</th>
+                            <th>IDENTIFICACION</th>
+                            <th>CORREO</th>
+                            <th>TELEFONO</th>
+                            <th>ACCIONES</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngFor="let cliente of filtroClientes">
+                            <td>{{cliente.id}}</td>
+                            <td>{{cliente.nombre}}</td>
+                            <td>{{cliente.apellido}}</td>
+                            <td>{{cliente.documento}}</td>
+                            <td>{{cliente.correo}}</td>
+                            <td>{{cliente.telefono}}</td>
+                            <td>
+                                <button (click)="editar(cliente)" class="btn btn-warning">Editar</button>
+                                <button (click)="borrar(cliente)" class="btn btn-danger">Eliminar</button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <ng-template #sinClientes>
+                    <p>No hay clientes</p>
+                </ng-template>
+            </div>
+        </div>
